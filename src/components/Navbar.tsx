@@ -1,17 +1,20 @@
 import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
   const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    gsap.from(navRef.current, {
-      y: -80,
-      opacity: 0,
-      duration: 1,
-      ease: "power3.out",
-      delay: 0.2,
+    import("gsap").then(({ default: gsap }) => {
+      gsap.from(navRef.current, {
+        y: -80,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out",
+        delay: 0.2,
+      });
     });
 
     const onScroll = () => setScrolled(window.scrollY > 50);
@@ -20,9 +23,17 @@ export default function Navbar() {
   }, []);
 
   const scrollTo = (id: string) => {
+    setMobileOpen(false);
     const el = document.getElementById(id);
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
+
+  const links = [
+    { label: "Início", id: "hero" },
+    { label: "Sobre", id: "about" },
+    { label: "Produtos", id: "products" },
+    { label: "Contato", id: "contact" },
+  ];
 
   return (
     <nav
@@ -37,13 +48,10 @@ export default function Navbar() {
         <button onClick={() => scrollTo("hero")} className="font-display text-2xl font-bold tracking-tight text-foreground">
           Arte <span className="text-primary">Manual</span>
         </button>
+
+        {/* Desktop links */}
         <div className="hidden items-center gap-8 md:flex">
-          {[
-            { label: "Início", id: "hero" },
-            { label: "Sobre", id: "about" },
-            { label: "Produtos", id: "products" },
-            { label: "Contato", id: "contact" },
-          ].map((item) => (
+          {links.map((item) => (
             <button
               key={item.id}
               onClick={() => scrollTo(item.id)}
@@ -53,10 +61,43 @@ export default function Navbar() {
             </button>
           ))}
         </div>
+
         <button onClick={() => scrollTo("contact")} className="btn-primary hidden md:inline-flex">
           Encomende
         </button>
+
+        {/* Mobile hamburger */}
+        <button
+          onClick={() => setMobileOpen(!mobileOpen)}
+          className="inline-flex items-center justify-center rounded-md p-2 text-foreground transition-colors hover:text-primary md:hidden"
+          aria-label="Menu"
+        >
+          {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+        </button>
       </div>
+
+      {/* Mobile menu */}
+      {mobileOpen && (
+        <div className="absolute left-0 right-0 top-full bg-background/95 backdrop-blur-md shadow-lg md:hidden">
+          <div className="flex flex-col gap-1 px-6 py-4">
+            {links.map((item) => (
+              <button
+                key={item.id}
+                onClick={() => scrollTo(item.id)}
+                className="rounded-md px-3 py-3 text-left font-body text-base font-medium text-foreground/80 transition-colors hover:bg-primary/10 hover:text-primary"
+              >
+                {item.label}
+              </button>
+            ))}
+            <button
+              onClick={() => scrollTo("contact")}
+              className="btn-primary mt-2 w-full text-center"
+            >
+              Encomende
+            </button>
+          </div>
+        </div>
+      )}
     </nav>
   );
 }
