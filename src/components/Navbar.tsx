@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
+import logoImg from "@/assets/logo-arte-manual.png";
 
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
@@ -40,16 +41,18 @@ export default function Navbar() {
       ref={navRef}
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
         scrolled
-          ? "bg-background/90 backdrop-blur-md shadow-sm py-3"
-          : "bg-transparent py-6"
+          ? "bg-background/90 backdrop-blur-md shadow-sm py-2"
+          : "bg-transparent py-4"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
-        <button onClick={() => scrollTo("hero")} className="font-display text-2xl font-bold tracking-tight text-foreground">
-          Arte <span className="text-primary">Manual</span>
+        <button onClick={() => scrollTo("hero")} className="flex items-center gap-2">
+          <img src={logoImg} alt="Arte Manual logo" width={40} height={40} className="h-10 w-10" />
+          <span className="font-display text-xl font-bold tracking-tight text-foreground">
+            Arte <span className="text-primary">Manual</span>
+          </span>
         </button>
 
-        {/* Desktop links */}
         <div className="hidden items-center gap-8 md:flex">
           {links.map((item) => (
             <button
@@ -66,7 +69,6 @@ export default function Navbar() {
           Encomende
         </button>
 
-        {/* Mobile hamburger */}
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="inline-flex items-center justify-center rounded-md p-2 text-foreground transition-colors hover:text-primary md:hidden"
@@ -76,7 +78,6 @@ export default function Navbar() {
         </button>
       </div>
 
-      {/* Mobile menu */}
       {mobileOpen && (
         <div className="absolute left-0 right-0 top-full bg-background/95 backdrop-blur-md shadow-lg md:hidden">
           <div className="flex flex-col gap-1 px-6 py-4">
