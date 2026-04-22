@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
+import Marquee from "@/components/Marquee";
 import AboutSection from "@/components/AboutSection";
 import ProductsSection from "@/components/ProductsSection";
 import ContactSection from "@/components/ContactSection";
@@ -23,6 +24,7 @@ function Index() {
     <div className="overflow-x-hidden">
       <Navbar />
       <HeroSection />
+      <Marquee />
       <AboutSection />
       <ProductsSection />
       <ContactSection />
