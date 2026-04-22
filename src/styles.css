@@ -102,11 +102,20 @@
   --cream: oklch(0.96 0.02 85);
   --cream-foreground: oklch(0.3 0.04 60);
 
-  --font-family-display: 'Playfair Display', Georgia, serif;
-  --font-family-body: 'Inter', system-ui, sans-serif;
+  --font-family-display: 'Sugo Display', 'Playfair Display', Georgia, serif;
+  --font-family-body: 'Sugo Display', 'Inter', system-ui, sans-serif;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
+
+/* Sugo Display — fonte principal da marca */
+@font-face {
+  font-family: 'Sugo Display';
+  src: url('https://fonts.cdnfonts.com/s/95672/Sugo-Pro-Display-Trial.woff') format('woff');
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 @layer base {
   * {
@@ -116,7 +125,7 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: var(--font-body);
+    font-family: var(--font-family-display);
   }
 
   html {
