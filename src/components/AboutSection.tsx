@@ -48,12 +48,17 @@ export default function AboutSection() {
           />
         </div>
         <div ref={textRef}>
-          <span className="font-body text-sm font-semibold uppercase tracking-widest text-primary">
-            Nossa História
-          </span>
-          <h2 className="mt-3 font-display text-4xl font-bold leading-tight text-cream-foreground md:text-5xl">
+          <div className="flex items-baseline gap-4">
+            <span className="font-display text-6xl font-light leading-none text-primary/30 md:text-7xl">
+              01
+            </span>
+            <span className="font-body text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+              Nossa História
+            </span>
+          </div>
+          <h2 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight text-cream-foreground md:text-6xl lg:text-7xl">
             Feito com as mãos,<br />
-            <span className="text-primary">sentido no coração</span>
+            <span className="italic text-primary">sentido no coração</span>
           </h2>
           <p className="mt-6 font-body text-base leading-relaxed text-muted-foreground">
             A Arte Manual nasceu do amor pelo crochê e pela vontade de criar peças que

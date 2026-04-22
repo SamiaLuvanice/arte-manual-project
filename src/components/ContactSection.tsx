@@ -32,13 +32,18 @@ export default function ContactSection() {
   return (
     <section id="contact" ref={sectionRef} className="section-padding bg-cream">
       <div className="mx-auto max-w-4xl text-center contact-content">
-        <span className="font-body text-sm font-semibold uppercase tracking-widest text-primary">
-          Contato
-        </span>
-        <h2 className="mt-3 font-display text-4xl font-bold leading-tight text-cream-foreground md:text-5xl">
-          Vamos criar algo <span className="text-primary">especial</span>?
+        <div className="flex items-baseline justify-center gap-4">
+          <span className="font-display text-6xl font-light leading-none text-primary/30 md:text-7xl">
+            03
+          </span>
+          <span className="font-body text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+            Contato
+          </span>
+        </div>
+        <h2 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight text-cream-foreground md:text-6xl lg:text-7xl">
+          Vamos criar algo <span className="italic text-primary">especial</span>?
         </h2>
-        <p className="mx-auto mt-4 max-w-lg font-body text-base text-muted-foreground">
+        <p className="mx-auto mt-6 max-w-lg font-body text-base text-muted-foreground">
           Fale diretamente conosco pelo WhatsApp! Tire suas dúvidas, faça encomendas personalizadas e receba atendimento exclusivo.
         </p>
 

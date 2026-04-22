@@ -62,7 +62,10 @@ export default function HeroSection() {
 
         {/* Content */}
         <div className="relative z-10 mx-auto w-full max-w-6xl px-6 text-center">
-          <h1 className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 overflow-hidden font-display text-5xl font-bold leading-tight tracking-tight text-primary-foreground md:text-7xl lg:text-8xl">
+          <span className="mb-6 inline-block font-body text-[0.7rem] font-medium uppercase tracking-[0.4em] text-primary-foreground/70 md:text-xs">
+            — Crochê artesanal · Desde 2019 —
+          </span>
+          <h1 className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 overflow-hidden font-display text-6xl font-bold leading-[0.9] tracking-tighter text-primary-foreground md:text-8xl lg:text-[10rem]">
             <span ref={arteRef} className="inline-block will-change-transform">
               Arte
             </span>

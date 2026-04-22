@@ -61,13 +61,18 @@ export default function ProductsSection() {
     <section id="products" ref={sectionRef} className="section-padding bg-background">
       <div className="mx-auto max-w-7xl">
         <div className="products-title text-center">
-          <span className="font-body text-sm font-semibold uppercase tracking-widest text-primary">
-            Nossos Produtos
-          </span>
-          <h2 className="mt-3 font-display text-4xl font-bold leading-tight text-foreground md:text-5xl">
-            Peças feitas com <span className="text-primary">carinho</span>
+          <div className="flex items-baseline justify-center gap-4">
+            <span className="font-display text-6xl font-light leading-none text-primary/30 md:text-7xl">
+              02
+            </span>
+            <span className="font-body text-xs font-semibold uppercase tracking-[0.3em] text-primary">
+              Nossos Produtos
+            </span>
+          </div>
+          <h2 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight text-foreground md:text-6xl lg:text-7xl">
+            Peças feitas com <span className="italic text-primary">carinho</span>
           </h2>
-          <p className="mx-auto mt-4 max-w-lg font-body text-base text-muted-foreground">
+          <p className="mx-auto mt-6 max-w-lg font-body text-base text-muted-foreground">
             Cada peça é única e feita sob encomenda, garantindo exclusividade e qualidade em cada detalhe.
           </p>
         </div>
