@@ -62,13 +62,11 @@ export default function ProductsSection() {
       <div className="mx-auto max-w-7xl">
         <div className="products-title text-center">
           <div className="flex items-baseline justify-center gap-4">
-            <span className="font-display text-6xl font-light leading-none text-primary/30 md:text-7xl">
-              02
-            </span>
             <span className="font-body text-xs font-semibold uppercase tracking-[0.3em] text-primary">
               Nossos Produtos
             </span>
           </div>
+
           <h2 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight text-foreground md:text-6xl lg:text-7xl">
             Peças feitas com <span className="italic text-primary">carinho</span>
           </h2>

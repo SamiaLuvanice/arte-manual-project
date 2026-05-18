@@ -33,13 +33,11 @@ export default function ContactSection() {
     <section id="contact" ref={sectionRef} className="section-padding bg-cream">
       <div className="mx-auto max-w-4xl text-center contact-content">
         <div className="flex items-baseline justify-center gap-4">
-          <span className="font-display text-6xl font-light leading-none text-primary/30 md:text-7xl">
-            03
-          </span>
           <span className="font-body text-xs font-semibold uppercase tracking-[0.3em] text-primary">
             Contato
           </span>
         </div>
+
         <h2 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight text-cream-foreground md:text-6xl lg:text-7xl">
           Vamos criar algo <span className="italic text-primary">especial</span>?
         </h2>
