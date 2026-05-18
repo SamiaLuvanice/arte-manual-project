@@ -49,13 +49,11 @@ export default function AboutSection() {
         </div>
         <div ref={textRef}>
           <div className="flex items-baseline gap-4">
-            <span className="font-display text-6xl font-light leading-none text-primary/30 md:text-7xl">
-              01
-            </span>
             <span className="font-body text-xs font-semibold uppercase tracking-[0.3em] text-primary">
               Nossa História
             </span>
           </div>
+
           <h2 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight text-cream-foreground md:text-6xl lg:text-7xl">
             Feito com as mãos,<br />
             <span className="italic text-primary">sentido no coração</span>
