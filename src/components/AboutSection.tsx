@@ -70,14 +70,17 @@ export default function AboutSection() {
           </p>
           <div className="mt-8 grid grid-cols-3 gap-6">
             {[
-              { number: "500+", label: "Peças criadas" },
-              { number: "200+", label: "Clientes felizes" },
-              { number: "5", label: "Anos de dedicação" },
-            ].map((stat) => (
-              <div key={stat.label}>
-                <p className="font-display text-3xl font-bold text-primary">{stat.number}</p>
-                <p className="mt-1 font-body text-xs text-muted-foreground">{stat.label}</p>
-              </div>
+              { number: 500, suffix: "+", label: "Peças criadas" },
+              { number: 200, suffix: "+", label: "Clientes felizes" },
+              { number: 5, suffix: "", label: "Anos de dedicação" },
+            ].map((stat, i) => (
+              <StatCounter
+                key={stat.label}
+                target={stat.number}
+                suffix={stat.suffix}
+                label={stat.label}
+                delay={i * 1.4}
+              />
             ))}
           </div>
         </div>
