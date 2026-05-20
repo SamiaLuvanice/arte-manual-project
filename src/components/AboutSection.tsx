@@ -68,6 +68,17 @@ export default function AboutSection() {
         scrollTrigger: { trigger: sectionRef.current, start: "top 75%" },
       });
 
+      gsap.to(imgRef.current, {
+        yPercent: -12,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.2,
+        },
+      });
+
       gsap.from(textRef.current?.children ?? [], {
         y: 50,
         opacity: 0,
@@ -92,7 +103,7 @@ export default function AboutSection() {
             width={800}
             height={1000}
             loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+            className="h-full w-full object-cover scale-110"
           />
         </div>
         <div ref={textRef}>
