@@ -8,38 +8,41 @@ gsap.registerPlugin(ScrollTrigger);
 export default function HeroSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
+  const titleRef = useRef<HTMLHeadingElement>(null);
   const arteRef = useRef<HTMLSpanElement>(null);
   const manualRef = useRef<HTMLSpanElement>(null);
+  const eyebrowRef = useRef<HTMLSpanElement>(null);
   const subtitleRef = useRef<HTMLParagraphElement>(null);
   const ctaRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Initial entrance animation
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-    tl.from(imgRef.current, { scale: 1.2, opacity: 0, duration: 1.5 })
-      .from(subtitleRef.current, { y: 40, opacity: 0, duration: 0.8 }, "-=0.8")
-      .from(ctaRef.current, { y: 30, opacity: 0, duration: 0.6 }, "-=0.4");
-
     const ctx = gsap.context(() => {
-      // Set initial offscreen positions for the title words
-      gsap.set(arteRef.current, { xPercent: -180, opacity: 0 });
-      gsap.set(manualRef.current, { xPercent: 180, opacity: 0 });
+      // Per-word SplitText-style reveal for the title
+      const wordTargets = titleRef.current?.querySelectorAll<HTMLElement>("[data-word]") ?? [];
+      gsap.set(wordTargets, { yPercent: 110 });
 
-      // Pin the hero and animate words toward center on scroll
-      ScrollTrigger.create({
-        trigger: pinRef.current,
-        start: "top top",
-        end: "+=120%",
-        pin: true,
-        pinSpacing: true,
-        scrub: 1,
-        anticipatePin: 1,
-        animation: gsap
-          .timeline()
-          .to(arteRef.current, { xPercent: 0, opacity: 1, ease: "power2.out" }, 0)
-          .to(manualRef.current, { xPercent: 0, opacity: 1, ease: "power2.out" }, 0)
-          .to(imgRef.current, { scale: 1.08, ease: "none" }, 0),
+      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+      tl.from(imgRef.current, { scale: 1.2, opacity: 0, duration: 1.6, ease: "power2.out" })
+        .from(eyebrowRef.current, { y: 16, opacity: 0, duration: 0.7 }, "-=1.0")
+        .to(
+          wordTargets,
+          { yPercent: 0, duration: 1.1, stagger: 0.14 },
+          "-=0.85"
+        )
+        .from(subtitleRef.current, { y: 28, opacity: 0, duration: 0.8 }, "-=0.6")
+        .from(ctaRef.current, { y: 24, opacity: 0, duration: 0.6 }, "-=0.4");
+
+      // Subtle parallax on the background image while scrolling the hero
+      gsap.to(imgRef.current, {
+        yPercent: 12,
+        ease: "none",
+        scrollTrigger: {
+          trigger: pinRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 1,
+        },
       });
     }, sectionRef);
 
@@ -62,19 +65,27 @@ export default function HeroSection() {
 
         {/* Content */}
         <div className="relative z-10 mx-auto w-full max-w-6xl px-6 text-center">
-          <span className="mb-6 inline-block font-body text-[0.7rem] font-medium uppercase tracking-[0.4em] text-primary-foreground/70 md:text-xs">
+          <span ref={eyebrowRef} className="mb-6 inline-block font-body text-[0.7rem] font-medium uppercase tracking-[0.4em] text-primary-foreground/70 md:text-xs">
             — Crochê artesanal · Desde 2019 —
           </span>
-          <h1 className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 overflow-hidden font-display text-6xl font-bold leading-[0.9] tracking-tighter text-primary-foreground md:text-8xl lg:text-[10rem]">
-            <span ref={arteRef} className="inline-block will-change-transform">
-              Arte
+          <h1
+            ref={titleRef}
+            className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 font-display text-6xl font-bold leading-[0.9] tracking-tighter text-primary-foreground md:text-8xl lg:text-[10rem]"
+          >
+            <span className="inline-block overflow-hidden pb-[0.12em]">
+              <span ref={arteRef} data-word className="inline-block will-change-transform">
+                Arte
+              </span>
             </span>
-            <span
-              ref={manualRef}
-              className="inline-block italic will-change-transform"
-              style={{ color: "oklch(0.85 0.1 55)" }}
-            >
-              Manual
+            <span className="inline-block overflow-hidden pb-[0.12em]">
+              <span
+                ref={manualRef}
+                data-word
+                className="inline-block italic will-change-transform"
+                style={{ color: "oklch(0.85 0.1 55)" }}
+              >
+                Manual
+              </span>
             </span>
           </h1>
           <p
@@ -103,3 +114,4 @@ export default function HeroSection() {
     </section>
   );
 }
+
