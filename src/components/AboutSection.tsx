@@ -103,7 +103,7 @@ export default function AboutSection() {
             width={800}
             height={1000}
             loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-700 hover:scale-105"
+            className="h-full w-full object-cover scale-110"
           />
         </div>
         <div ref={textRef}>
