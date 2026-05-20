@@ -5,6 +5,54 @@ import aboutImg from "@/assets/about-crochet.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
+function StatCounter({
+  target,
+  suffix,
+  label,
+  delay = 1.4,
+}: {
+  target: number;
+  suffix: string;
+  label: string;
+  delay?: number;
+}) {
+  const numRef = useRef<HTMLParagraphElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const obj = { val: 1 };
+    const anim = gsap.to(obj, {
+      val: target,
+      duration: 1.4,
+      ease: "power2.out",
+      delay,
+      scrollTrigger: {
+        trigger: wrapRef.current,
+        start: "top 85%",
+        once: true,
+      },
+      onUpdate: () => {
+        if (numRef.current) {
+          numRef.current.textContent =
+            Math.floor(obj.val).toString() + suffix;
+        }
+      },
+    });
+    return () => {
+      anim.kill();
+    };
+  }, [target, suffix, delay]);
+
+  return (
+    <div ref={wrapRef}>
+      <p ref={numRef} className="font-display text-3xl font-bold text-primary">
+        0{suffix}
+      </p>
+      <p className="mt-1 font-body text-xs text-muted-foreground">{label}</p>
+    </div>
+  );
+}
+
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
