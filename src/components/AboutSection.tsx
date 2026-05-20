@@ -68,6 +68,17 @@ export default function AboutSection() {
         scrollTrigger: { trigger: sectionRef.current, start: "top 75%" },
       });
 
+      gsap.to(imgRef.current, {
+        yPercent: -12,
+        ease: "none",
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.2,
+        },
+      });
+
       gsap.from(textRef.current?.children ?? [], {
         y: 50,
         opacity: 0,
