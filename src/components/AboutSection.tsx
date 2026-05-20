@@ -5,6 +5,54 @@ import aboutImg from "@/assets/about-crochet.jpg";
 
 gsap.registerPlugin(ScrollTrigger);
 
+function StatCounter({
+  target,
+  suffix,
+  label,
+  delay = 1.4,
+}: {
+  target: number;
+  suffix: string;
+  label: string;
+  delay?: number;
+}) {
+  const numRef = useRef<HTMLParagraphElement>(null);
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const obj = { val: 1 };
+    const anim = gsap.to(obj, {
+      val: target,
+      duration: 1.4,
+      ease: "power2.out",
+      delay,
+      scrollTrigger: {
+        trigger: wrapRef.current,
+        start: "top 85%",
+        once: true,
+      },
+      onUpdate: () => {
+        if (numRef.current) {
+          numRef.current.textContent =
+            Math.floor(obj.val).toString() + suffix;
+        }
+      },
+    });
+    return () => {
+      anim.kill();
+    };
+  }, [target, suffix, delay]);
+
+  return (
+    <div ref={wrapRef}>
+      <p ref={numRef} className="font-display text-3xl font-bold text-primary">
+        0{suffix}
+      </p>
+      <p className="mt-1 font-body text-xs text-muted-foreground">{label}</p>
+    </div>
+  );
+}
+
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -70,14 +118,17 @@ export default function AboutSection() {
           </p>
           <div className="mt-8 grid grid-cols-3 gap-6">
             {[
-              { number: "500+", label: "Peças criadas" },
-              { number: "200+", label: "Clientes felizes" },
-              { number: "5", label: "Anos de dedicação" },
-            ].map((stat) => (
-              <div key={stat.label}>
-                <p className="font-display text-3xl font-bold text-primary">{stat.number}</p>
-                <p className="mt-1 font-body text-xs text-muted-foreground">{stat.label}</p>
-              </div>
+              { number: 500, suffix: "+", label: "Peças criadas" },
+              { number: 200, suffix: "+", label: "Clientes felizes" },
+              { number: 5, suffix: "", label: "Anos de dedicação" },
+            ].map((stat, i) => (
+              <StatCounter
+                key={stat.label}
+                target={stat.number}
+                suffix={stat.suffix}
+                label={stat.label}
+                delay={i * 1.4}
+              />
             ))}
           </div>
         </div>
