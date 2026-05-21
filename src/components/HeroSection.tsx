@@ -18,66 +18,53 @@ export default function HeroSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Per-word SplitText-style reveal for the title
       const wordTargets = titleRef.current?.querySelectorAll<HTMLElement>("[data-word]") ?? [];
-      gsap.set(wordTargets, { yPercent: 110 });
 
+      // Intro timeline (image + eyebrow + subtitle + CTA) on mount
       const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
       tl.from(imgRef.current, { scale: 1.2, opacity: 0, duration: 1.6, ease: "power2.out" })
         .from(eyebrowRef.current, { y: 16, opacity: 0, duration: 0.7 }, "-=1.0")
-        .to(wordTargets, { yPercent: 0, duration: 1.1, stagger: 0.14 }, "-=0.85")
         .from(subtitleRef.current, { y: 28, opacity: 0, duration: 0.8 }, "-=0.6")
         .from(ctaRef.current, { y: 24, opacity: 0, duration: 0.6 }, "-=0.4");
 
-      // Horizontal pin: "Arte" slides from the left and "Manual" from the right
-      // toward each other while the hero stays pinned on screen.
-      gsap.fromTo(
-        arteRef.current,
-        { xPercent: -120 },
-        {
-          xPercent: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: pinRef.current,
-            start: "top top",
-            end: "+=120%",
-            scrub: 1,
-            pin: true,
-            pinSpacing: true,
-            anticipatePin: 1,
-          },
-        }
-      );
-      gsap.fromTo(
-        manualRef.current,
-        { xPercent: 120 },
-        {
-          xPercent: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: pinRef.current,
-            start: "top top",
-            end: "+=120%",
-            scrub: 1,
-          },
-        }
-      );
-
-      // Subtle parallax on the background image while the hero is pinned
-      gsap.to(imgRef.current, {
-        yPercent: 12,
-        ease: "none",
+      // Pin the hero and drive the word reveal + parallax with a light scrub
+      const scrubTl = gsap.timeline({
         scrollTrigger: {
           trigger: pinRef.current,
           start: "top top",
           end: "+=120%",
-          scrub: 1,
+          scrub: 0.6,
+          pin: true,
+          pinSpacing: true,
+          anticipatePin: 1,
         },
       });
+
+      scrubTl
+        .fromTo(
+          wordTargets,
+          { yPercent: 110 },
+          { yPercent: 0, ease: "power3.out", stagger: 0.25, duration: 1 },
+          0
+        )
+        .fromTo(
+          arteRef.current,
+          { xPercent: -120 },
+          { xPercent: 0, ease: "none", duration: 1 },
+          0
+        )
+        .fromTo(
+          manualRef.current,
+          { xPercent: 120 },
+          { xPercent: 0, ease: "none", duration: 1 },
+          0
+        )
+        .to(imgRef.current, { yPercent: 12, ease: "none", duration: 1 }, 0);
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
+
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
