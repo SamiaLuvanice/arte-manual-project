@@ -25,22 +25,52 @@ export default function HeroSection() {
       const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
       tl.from(imgRef.current, { scale: 1.2, opacity: 0, duration: 1.6, ease: "power2.out" })
         .from(eyebrowRef.current, { y: 16, opacity: 0, duration: 0.7 }, "-=1.0")
-        .to(
-          wordTargets,
-          { yPercent: 0, duration: 1.1, stagger: 0.14 },
-          "-=0.85"
-        )
+        .to(wordTargets, { yPercent: 0, duration: 1.1, stagger: 0.14 }, "-=0.85")
         .from(subtitleRef.current, { y: 28, opacity: 0, duration: 0.8 }, "-=0.6")
         .from(ctaRef.current, { y: 24, opacity: 0, duration: 0.6 }, "-=0.4");
 
-      // Subtle parallax on the background image while scrolling the hero
+      // Horizontal pin: "Arte" slides from the left and "Manual" from the right
+      // toward each other while the hero stays pinned on screen.
+      gsap.fromTo(
+        arteRef.current,
+        { xPercent: -120 },
+        {
+          xPercent: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: pinRef.current,
+            start: "top top",
+            end: "+=120%",
+            scrub: 1,
+            pin: true,
+            pinSpacing: true,
+            anticipatePin: 1,
+          },
+        }
+      );
+      gsap.fromTo(
+        manualRef.current,
+        { xPercent: 120 },
+        {
+          xPercent: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: pinRef.current,
+            start: "top top",
+            end: "+=120%",
+            scrub: 1,
+          },
+        }
+      );
+
+      // Subtle parallax on the background image while the hero is pinned
       gsap.to(imgRef.current, {
         yPercent: 12,
         ease: "none",
         scrollTrigger: {
           trigger: pinRef.current,
           start: "top top",
-          end: "bottom top",
+          end: "+=120%",
           scrub: 1,
         },
       });
@@ -114,4 +144,3 @@ export default function HeroSection() {
     </section>
   );
 }
-
