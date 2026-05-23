@@ -39,16 +39,28 @@ export default function Navbar() {
   return (
     <nav
       ref={navRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-[padding,background-color,box-shadow,backdrop-filter,border-color] duration-300 ease-out ${
         scrolled
-          ? "bg-background/95 backdrop-blur-md shadow-md py-2 border-b border-border/60"
-          : "bg-background/75 backdrop-blur-sm py-4 shadow-sm"
+          ? "bg-background/90 backdrop-blur-md shadow-md py-2 border-b border-border/60"
+          : "bg-background/70 backdrop-blur-sm py-4 border-b border-transparent"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6">
         <button onClick={() => scrollTo("hero")} className="flex items-center gap-2">
-          <img src={logoImg} alt="Arte Manual logo" width={40} height={40} className="h-10 w-10 drop-shadow-sm" />
-          <span className="font-display text-xl font-bold tracking-tight text-foreground">
+          <img
+            src={logoImg}
+            alt="Arte Manual logo"
+            width={40}
+            height={40}
+            className={`drop-shadow-sm transition-all duration-300 ease-out ${
+              scrolled ? "h-8 w-8" : "h-10 w-10"
+            }`}
+          />
+          <span
+            className={`font-display font-bold tracking-tight text-foreground transition-all duration-300 ease-out ${
+              scrolled ? "text-lg" : "text-xl"
+            }`}
+          >
             Arte <span className="text-primary">Manual</span>
           </span>
         </button>
