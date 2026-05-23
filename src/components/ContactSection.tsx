@@ -2,14 +2,9 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MessageCircle, Clock, Heart } from "lucide-react";
+import { WHATSAPP_URL } from "@/lib/contact";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const WHATSAPP_NUMBER = "5500000000000"; // Substitua pelo número real
-const WHATSAPP_MESSAGE = encodeURIComponent(
-  "Olá! Gostaria de saber mais sobre as peças de crochê da Arte Manual 🧶"
-);
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
 
 export default function ContactSection() {
   const sectionRef = useRef<HTMLElement>(null);

@@ -103,7 +103,7 @@
   --cream-foreground: oklch(0.3 0.04 60);
 
   --font-family-display: 'Sugo Display', 'Playfair Display', Georgia, serif;
-  --font-family-body: 'Sugo Display', 'Inter', system-ui, sans-serif;
+  --font-family-body: 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap');
@@ -125,7 +125,7 @@
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
-    font-family: var(--font-family-display);
+    font-family: var(--font-family-body);
   }
 
   html {

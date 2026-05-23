@@ -1,11 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-
-const WHATSAPP_NUMBER = "5500000000000"; // Substitua pelo número real
-const WHATSAPP_MESSAGE = encodeURIComponent(
-  "Olá! Gostaria de saber mais sobre as peças de crochê da Arte Manual 🧶"
-);
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MESSAGE}`;
+import { WHATSAPP_URL } from "@/lib/contact";
 
 export default function FloatingWhatsApp() {
   const wrapRef = useRef<HTMLDivElement>(null);
