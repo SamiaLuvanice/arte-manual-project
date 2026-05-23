@@ -138,7 +138,7 @@ export default function AboutSection() {
                 target={stat.number}
                 suffix={stat.suffix}
                 label={stat.label}
-                delay={i * 1.4}
+                delay={0.2 + i * 0.15}
               />
             ))}
           </div>
