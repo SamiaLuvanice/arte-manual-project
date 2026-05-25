@@ -55,12 +55,13 @@ function StatCounter({
 
 export default function AboutSection() {
   const sectionRef = useRef<HTMLElement>(null);
+  const imgWrapRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      gsap.from(imgRef.current, {
+      gsap.from(imgWrapRef.current, {
         x: -80,
         opacity: 0,
         duration: 1.2,
