@@ -99,6 +99,7 @@ export default function HeroSection() {
                 ref={manualRef}
                 data-word
                 className="inline-block italic text-accent-warm will-change-transform"
+              >
                 Manual
               </span>
             </span>
