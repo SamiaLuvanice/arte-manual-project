@@ -2,8 +2,6 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 const WORDS = ["Crochê", "Artesanal", "Único", "Feito à mão"];
-// Duplicado para criar loop perfeito
-const LOOP = [...WORDS, ...WORDS, ...WORDS, ...WORDS];
 
 export default function Marquee() {
   const trackRef = useRef<HTMLDivElement>(null);
