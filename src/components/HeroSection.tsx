@@ -98,9 +98,7 @@ export default function HeroSection() {
               <span
                 ref={manualRef}
                 data-word
-                className="inline-block italic will-change-transform"
-                style={{ color: "oklch(0.85 0.1 55)" }}
-              >
+                className="inline-block italic text-accent-warm will-change-transform"
                 Manual
               </span>
             </span>
