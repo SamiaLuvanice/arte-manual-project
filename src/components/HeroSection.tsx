@@ -114,7 +114,7 @@ export default function HeroSection() {
             <button onClick={() => scrollTo("products")} className="btn-primary">
               Ver Produtos
             </button>
-            <button onClick={() => scrollTo("about")} className="btn-outline" style={{ borderColor: "oklch(0.9 0.02 75)", color: "oklch(0.95 0.01 75)" }}>
+            <button onClick={() => scrollTo("about")} className="btn-outline border-accent-warm-foreground/80 text-accent-warm-foreground">
               Nossa História
             </button>
           </div>
