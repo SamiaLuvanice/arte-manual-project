@@ -53,6 +53,9 @@
   --color-sage-foreground: var(--sage-foreground);
   --color-cream: var(--cream);
   --color-cream-foreground: var(--cream-foreground);
+  --color-accent-warm: var(--accent-warm);
+  --color-accent-warm-foreground: var(--accent-warm-foreground);
+  --color-whatsapp: var(--whatsapp);
   --font-display: var(--font-family-display);
   --font-body: var(--font-family-body);
 }
