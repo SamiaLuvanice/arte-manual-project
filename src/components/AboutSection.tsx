@@ -96,7 +96,7 @@ export default function AboutSection() {
   return (
     <section id="about" ref={sectionRef} className="section-padding bg-cream">
       <div className="mx-auto grid max-w-7xl items-center gap-16 md:grid-cols-2">
-        <div className="overflow-hidden rounded-3xl">
+        <div ref={imgWrapRef} className="overflow-hidden rounded-3xl">
           <img
             ref={imgRef}
             src={aboutImg}
