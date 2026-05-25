@@ -67,13 +67,11 @@ export default function FloatingWhatsApp() {
         aria-label="Falar no WhatsApp"
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
-        className="group relative flex h-14 w-14 items-center justify-center rounded-full shadow-xl transition-transform duration-300 hover:scale-110"
-        style={{ backgroundColor: "oklch(0.65 0.17 145)" }}
+        className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp shadow-xl transition-transform duration-300 hover:scale-110"
       >
         {/* Pulso */}
         <span
-          className="absolute inset-0 animate-ping rounded-full opacity-40"
-          style={{ backgroundColor: "oklch(0.65 0.17 145)" }}
+          className="absolute inset-0 animate-ping rounded-full bg-whatsapp opacity-40"
           aria-hidden="true"
         />
         <svg
