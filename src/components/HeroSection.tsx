@@ -32,7 +32,7 @@ export default function HeroSection() {
         scrollTrigger: {
           trigger: pinRef.current,
           start: "top top",
-          end: "+=120%",
+          end: "+=80%",
           scrub: 0.6,
           pin: true,
           pinSpacing: true,
