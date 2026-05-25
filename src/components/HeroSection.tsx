@@ -32,7 +32,7 @@ export default function HeroSection() {
         scrollTrigger: {
           trigger: pinRef.current,
           start: "top top",
-          end: "+=120%",
+          end: "+=80%",
           scrub: 0.6,
           pin: true,
           pinSpacing: true,
@@ -98,8 +98,7 @@ export default function HeroSection() {
               <span
                 ref={manualRef}
                 data-word
-                className="inline-block italic will-change-transform"
-                style={{ color: "oklch(0.85 0.1 55)" }}
+                className="inline-block italic text-accent-warm will-change-transform"
               >
                 Manual
               </span>
@@ -115,7 +114,7 @@ export default function HeroSection() {
             <button onClick={() => scrollTo("products")} className="btn-primary">
               Ver Produtos
             </button>
-            <button onClick={() => scrollTo("about")} className="btn-outline" style={{ borderColor: "oklch(0.9 0.02 75)", color: "oklch(0.95 0.01 75)" }}>
+            <button onClick={() => scrollTo("about")} className="btn-outline border-accent-warm-foreground/80 text-accent-warm-foreground">
               Nossa História
             </button>
           </div>
@@ -123,7 +122,7 @@ export default function HeroSection() {
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="oklch(0.95 0.01 75)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="text-accent-warm-foreground" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M12 5v14M19 12l-7 7-7-7" />
           </svg>
         </div>

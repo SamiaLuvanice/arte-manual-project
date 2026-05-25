@@ -53,6 +53,9 @@
   --color-sage-foreground: var(--sage-foreground);
   --color-cream: var(--cream);
   --color-cream-foreground: var(--cream-foreground);
+  --color-accent-warm: var(--accent-warm);
+  --color-accent-warm-foreground: var(--accent-warm-foreground);
+  --color-whatsapp: var(--whatsapp);
   --font-display: var(--font-family-display);
   --font-body: var(--font-family-body);
 }
@@ -101,6 +104,12 @@
   --sage-foreground: oklch(0.2 0.04 155);
   --cream: oklch(0.96 0.02 85);
   --cream-foreground: oklch(0.3 0.04 60);
+
+  /* Accent warm tone (used on hero italic + outline button text) */
+  --accent-warm: oklch(0.85 0.1 55);
+  --accent-warm-foreground: oklch(0.95 0.01 75);
+  /* WhatsApp brand green */
+  --whatsapp: oklch(0.65 0.17 145);
 
   --font-family-display: 'Sugo Display', 'Playfair Display', Georgia, serif;
   --font-family-body: 'Inter', system-ui, -apple-system, sans-serif;

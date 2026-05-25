@@ -2,8 +2,6 @@ import { useEffect, useRef } from "react";
 import gsap from "gsap";
 
 const WORDS = ["Crochê", "Artesanal", "Único", "Feito à mão"];
-// Duplicado para criar loop perfeito
-const LOOP = [...WORDS, ...WORDS, ...WORDS, ...WORDS];
 
 export default function Marquee() {
   const trackRef = useRef<HTMLDivElement>(null);
@@ -38,7 +36,7 @@ export default function Marquee() {
       <div ref={trackRef} className="flex w-max whitespace-nowrap will-change-transform">
         {[0, 1].map((copy) => (
           <div key={copy} className="flex shrink-0 items-center">
-            {LOOP.map((word, i) => (
+            {WORDS.map((word, i) => (
               <span
                 key={`${copy}-${i}`}
                 className="flex items-center gap-10 px-10 font-display text-4xl font-medium tracking-tight text-foreground md:text-6xl lg:text-7xl"
