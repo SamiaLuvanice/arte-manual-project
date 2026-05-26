@@ -19,6 +19,16 @@ export default function Marquee() {
       repeat: -1,
     });
 
+    // Quando as fontes terminam de carregar, a largura real muda.
+    // Reiniciamos o tween para re-medir e manter o loop alinhado.
+    const restart = () => {
+      tween.invalidate().restart();
+    };
+
+    if (typeof document !== "undefined" && "fonts" in document) {
+      document.fonts.ready.then(restart).catch(() => {});
+    }
+
     return () => {
       tween.kill();
     };
