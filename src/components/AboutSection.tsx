@@ -96,7 +96,7 @@ export default function AboutSection() {
   return (
     <section id="about" ref={sectionRef} className="section-padding bg-cream">
       <div className="mx-auto grid max-w-7xl items-center gap-16 md:grid-cols-2">
-        <div ref={imgWrapRef} className="overflow-hidden rounded-3xl">
+        <div ref={imgWrapRef} className="overflow-hidden rounded-3xl min-h-[480px] md:min-h-[560px]">
           <img
             ref={imgRef}
             src={aboutImg}
@@ -104,7 +104,7 @@ export default function AboutSection() {
             width={800}
             height={1000}
             loading="lazy"
-            className="h-full w-full object-cover scale-110"
+            className="h-full w-full object-cover scale-110 lg:scale-105"
           />
         </div>
         <div ref={textRef}>
