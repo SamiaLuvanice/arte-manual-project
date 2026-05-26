@@ -14,7 +14,7 @@ export default function Marquee() {
     // Animar -50% da largura total cria um loop perfeito.
     const tween = gsap.to(track, {
       xPercent: -50,
-      duration: 75,
+      duration: 25,
       ease: "none",
       repeat: -1,
     });
