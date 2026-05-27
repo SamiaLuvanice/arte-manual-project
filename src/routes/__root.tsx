@@ -32,11 +32,15 @@ export const Route = createRootRoute({
       { title: "Arte Manual — Crochê Artesanal" },
       { name: "description", content: "Peças únicas de crochê feitas à mão com carinho e dedicação." },
       { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { property: "og:title", content: "Arte Manual — Crochê Artesanal" },
+      { property: "og:description", content: "Peças únicas de crochê feitas à mão com carinho e dedicação." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:title", content: "Arte Manual — Crochê Artesanal" },
+      { name: "twitter:description", content: "Peças únicas de crochê feitas à mão com carinho e dedicação." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0efacfb8-a655-4120-94c7-a79e5a6fc216/id-preview-de3f40a7--b5911c27-bff7-4555-9ced-361dcc8fba1d.lovable.app-1779911608899.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0efacfb8-a655-4120-94c7-a79e5a6fc216/id-preview-de3f40a7--b5911c27-bff7-4555-9ced-361dcc8fba1d.lovable.app-1779911608899.png" },
     ],
     links: [
       {
