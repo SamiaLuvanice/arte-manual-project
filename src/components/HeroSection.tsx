@@ -1,11 +1,10 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import useGsap from "@/hooks/useGsap";
 import heroImg from "@/assets/hero-crochet.jpg";
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function HeroSection() {
+  useGsap();
   const sectionRef = useRef<HTMLElement>(null);
   const pinRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);

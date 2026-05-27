@@ -1,12 +1,11 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import useGsap from "@/hooks/useGsap";
 import { MessageCircle, Clock, Heart } from "lucide-react";
 import { WHATSAPP_URL } from "@/lib/contact";
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function ContactSection() {
+  useGsap();
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {

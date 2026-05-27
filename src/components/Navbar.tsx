@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import gsap from "gsap";
 import { Menu, X } from "lucide-react";
 import logoImg from "@/assets/logo-arte-manual.png";
 
@@ -8,14 +9,12 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    import("gsap").then(({ default: gsap }) => {
-      gsap.from(navRef.current, {
-        y: -80,
-        opacity: 0,
-        duration: 1,
-        ease: "power3.out",
-        delay: 0.2,
-      });
+    gsap.from(navRef.current, {
+      y: -80,
+      opacity: 0,
+      duration: 1,
+      ease: "power3.out",
+      delay: 0.2,
     });
 
     const onScroll = () => setScrolled(window.scrollY > 50);

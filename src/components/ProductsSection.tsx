@@ -1,11 +1,9 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import useGsap from "@/hooks/useGsap";
 import blanketImg from "@/assets/product-blanket.jpg";
 import amigurumiImg from "@/assets/product-amigurumi.jpg";
 import bagImg from "@/assets/product-bag.jpg";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const products = [
   {
@@ -29,6 +27,7 @@ const products = [
 ];
 
 export default function ProductsSection() {
+  useGsap();
   const sectionRef = useRef<HTMLElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 

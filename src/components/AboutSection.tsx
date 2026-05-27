@@ -1,59 +1,12 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import useGsap from "@/hooks/useGsap";
 import aboutImg from "@/assets/about-crochet.jpg";
-
-gsap.registerPlugin(ScrollTrigger);
-
-function StatCounter({
-  target,
-  suffix,
-  label,
-  delay = 1.4,
-}: {
-  target: number;
-  suffix: string;
-  label: string;
-  delay?: number;
-}) {
-  const numRef = useRef<HTMLParagraphElement>(null);
-  const wrapRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const obj = { val: 1 };
-    const anim = gsap.to(obj, {
-      val: target,
-      duration: 1.4,
-      ease: "power2.out",
-      delay,
-      scrollTrigger: {
-        trigger: wrapRef.current,
-        start: "top 85%",
-        once: true,
-      },
-      onUpdate: () => {
-        if (numRef.current) {
-          numRef.current.textContent =
-            Math.floor(obj.val).toString() + suffix;
-        }
-      },
-    });
-    return () => {
-      anim.kill();
-    };
-  }, [target, suffix, delay]);
-
-  return (
-    <div ref={wrapRef}>
-      <p ref={numRef} className="font-display text-3xl font-bold text-primary">
-        0{suffix}
-      </p>
-      <p className="mt-1 font-body text-xs text-muted-foreground">{label}</p>
-    </div>
-  );
-}
+import StatCounter from "./ui/StatCounter";
+import { STATS, StatItem } from "@/lib/constants";
 
 export default function AboutSection() {
+  useGsap();
   const sectionRef = useRef<HTMLElement>(null);
   const imgWrapRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
@@ -94,7 +47,12 @@ export default function AboutSection() {
   }, []);
 
   return (
-    <section id="about" ref={sectionRef} className="section-padding bg-cream">
+    <section
+      id="about"
+      ref={sectionRef}
+      className="section-padding bg-cream"
+      aria-labelledby="about-heading"
+    >
       <div className="mx-auto grid max-w-7xl items-center gap-16 md:grid-cols-2">
         <div ref={imgWrapRef} className="overflow-hidden rounded-3xl min-h-[480px] md:min-h-[560px]">
           <img
@@ -114,7 +72,7 @@ export default function AboutSection() {
             </span>
           </div>
 
-          <h2 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight text-cream-foreground md:text-6xl lg:text-7xl">
+          <h2 id="about-heading" className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight text-cream-foreground md:text-6xl lg:text-7xl">
             Feito com as mãos,<br />
             <span className="italic text-primary">sentido no coração</span>
           </h2>
@@ -128,19 +86,9 @@ export default function AboutSection() {
             carregam a tradição do crochê com um toque moderno, perfeitas para presentear
             quem você ama ou decorar seu lar com carinho.
           </p>
-          <div className="mt-8 grid grid-cols-3 gap-6">
-            {[
-              { number: 500, suffix: "+", label: "Peças criadas" },
-              { number: 200, suffix: "+", label: "Clientes felizes" },
-              { number: 5, suffix: "", label: "Anos de dedicação" },
-            ].map((stat, i) => (
-              <StatCounter
-                key={stat.label}
-                target={stat.number}
-                suffix={stat.suffix}
-                label={stat.label}
-                delay={0.2 + i * 0.15}
-              />
+          <div className="mt-8 grid grid-cols-3 gap-6" role="list">
+            {STATS.map((stat: StatItem, i) => (
+              <StatCounter key={stat.label} stat={stat} delay={0.2 + i * 0.15} />
             ))}
           </div>
         </div>
