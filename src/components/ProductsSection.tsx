@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react";
 import gsap from "gsap";
 import useGsap from "@/hooks/useGsap";
-import blanketImg from "@/assets/product-blanket.jpg";
-import amigurumiImg from "@/assets/product-amigurumi.jpg";
-import bagImg from "@/assets/product-bag.jpg";
+import blanketImg from "@/assets/product-blanket.jpeg";
+import amigurumiImg from "@/assets/product-amigurumi.jpeg";
+import bagImg from "@/assets/product-bag.jpeg";
 
 const products = [
   {
-    title: "Mantas & Cobertores",
+    title: "Acessórios",
     description: "Mantas artesanais perfeitas para aquecer seu lar com estilo e conforto.",
     image: blanketImg,
     price: "A partir de R$ 120",
