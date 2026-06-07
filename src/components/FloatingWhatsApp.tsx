@@ -1,10 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
 import { WHATSAPP_URL } from "@/lib/contact";
+import gsap from "gsap";
+import { useEffect, useRef, useState, type ReactElement } from "react";
 
-export default function FloatingWhatsApp() {
-  const wrapRef = useRef<HTMLDivElement>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
+export default function FloatingWhatsApp(): ReactElement {
+  const wrapRef = useRef<HTMLDivElement | null>(null);
   const [visible, setVisible] = useState(false);
   const [showTooltip, setShowTooltip] = useState(false);
 
@@ -19,27 +18,52 @@ export default function FloatingWhatsApp() {
   // Animação de entrada
   useEffect(() => {
     if (!wrapRef.current) return;
+    const prefersReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    const node = wrapRef.current;
+    if (!node) return;
+
     if (visible) {
-      gsap.to(wrapRef.current, {
-        scale: 1,
-        opacity: 1,
-        duration: 0.5,
-        ease: "back.out(1.7)",
-      });
+      if (prefersReduced) {
+        node.style.transform = "scale(1)";
+        node.style.opacity = "1";
+      } else {
+        gsap.to(node, {
+          scale: 1,
+          opacity: 1,
+          duration: 0.5,
+          ease: "back.out(1.7)",
+        });
+      }
+
       // Mostra tooltip uma vez após aparecer
-      const t = setTimeout(() => setShowTooltip(true), 800);
-      const h = setTimeout(() => setShowTooltip(false), 5000);
+      const showId = window.setTimeout(() => setShowTooltip(true), 800);
+      const hideId = window.setTimeout(() => setShowTooltip(false), 5000);
+
       return () => {
-        clearTimeout(t);
-        clearTimeout(h);
+        if (showId) window.clearTimeout(showId);
+        if (hideId) window.clearTimeout(hideId);
+        timeoutsRef.current.show = null;
+        timeoutsRef.current.hide = null;
+        if (!prefersReduced) gsap.killTweensOf(node as Element);
       };
-    } else {
-      gsap.to(wrapRef.current, {
-        scale: 0,
-        opacity: 0,
-        duration: 0.3,
-        ease: "power2.in",
-      });
+    }
+
+    if (!visible) {
+      if (prefersReduced) {
+        node.style.transform = "scale(0)";
+        node.style.opacity = "0";
+      } else {
+        gsap.to(node, {
+          scale: 0,
+          opacity: 0,
+          duration: 0.3,
+          ease: "power2.in",
+        });
+      }
     }
   }, [visible]);
 
@@ -51,10 +75,12 @@ export default function FloatingWhatsApp() {
     >
       {/* Tooltip */}
       <div
-        ref={tooltipRef}
         className={`pointer-events-none hidden rounded-full bg-background px-4 py-2 font-body text-sm font-medium text-foreground shadow-lg transition-all duration-300 sm:block ${
           showTooltip ? "translate-x-0 opacity-100" : "translate-x-2 opacity-0"
         }`}
+        aria-hidden={!showTooltip}
+        role="status"
+        aria-live="polite"
       >
         Fale conosco no WhatsApp 🧶
       </div>
@@ -67,6 +93,8 @@ export default function FloatingWhatsApp() {
         aria-label="Falar no WhatsApp"
         onMouseEnter={() => setShowTooltip(true)}
         onMouseLeave={() => setShowTooltip(false)}
+        onFocus={() => setShowTooltip(true)}
+        onBlur={() => setShowTooltip(false)}
         className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-whatsapp shadow-xl transition-transform duration-300 hover:scale-110"
       >
         {/* Pulso */}
