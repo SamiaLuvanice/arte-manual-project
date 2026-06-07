@@ -1,5 +1,6 @@
-import { Outlet, Link, createRootRoute, HeadContent, Scripts } from "@tanstack/react-router";
+import { createRootRoute, HeadContent, Link, Outlet, Scripts } from "@tanstack/react-router";
 
+import logoUrl from "@/assets/logo-arte-manual.png?url";
 import appCss from "../styles.css?url";
 
 function NotFoundComponent() {
@@ -64,6 +65,8 @@ export const Route = createRootRoute({
         rel: "stylesheet",
         href: appCss,
       },
+      { rel: "icon", href: logoUrl, type: "image/png" },
+      { rel: "apple-touch-icon", href: logoUrl },
     ],
   }),
   shellComponent: RootShell,
