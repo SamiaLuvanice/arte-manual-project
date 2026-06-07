@@ -1,54 +1,100 @@
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import useGsap from "@/hooks/useGsap";
 import heroImg from "@/assets/hero-crochet.jpg";
+import useGsap from "@/hooks/useGsap";
+import gsap from "gsap";
+import { useEffect, useRef, type ReactElement } from "react";
 
-export default function HeroSection() {
+export default function HeroSection(): ReactElement {
   useGsap();
-  const sectionRef = useRef<HTMLElement>(null);
-  const pinRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const arteRef = useRef<HTMLSpanElement>(null);
-  const manualRef = useRef<HTMLSpanElement>(null);
-  const eyebrowRef = useRef<HTMLSpanElement>(null);
-  const subtitleRef = useRef<HTMLParagraphElement>(null);
-  const ctaRef = useRef<HTMLDivElement>(null);
-  const imgRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const pinRef = useRef<HTMLDivElement | null>(null);
+  const titleRef = useRef<HTMLHeadingElement | null>(null);
+  const arteRef = useRef<HTMLSpanElement | null>(null);
+  const manualRef = useRef<HTMLSpanElement | null>(null);
+  const eyebrowRef = useRef<HTMLSpanElement | null>(null);
+  const subtitleRef = useRef<HTMLParagraphElement | null>(null);
+  const ctaRef = useRef<HTMLDivElement | null>(null);
+  const imgRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const prefersReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
     const ctx = gsap.context(() => {
       const wordTargets = titleRef.current?.querySelectorAll<HTMLElement>("[data-word]") ?? [];
 
+      const introDuration = prefersReduced ? 0 : 1.6;
+      const smallDur = prefersReduced ? 0 : 0.7;
+
       // Intro timeline (image + eyebrow + subtitle + CTA) on mount
       const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
-      tl.from(imgRef.current, { scale: 1.2, opacity: 0, duration: 1.6, ease: "power2.out" })
-        .from(eyebrowRef.current, { y: 16, opacity: 0, duration: 0.7 }, "-=1.0")
-        .from(subtitleRef.current, { y: 28, opacity: 0, duration: 0.8 }, "-=0.6")
-        .from(ctaRef.current, { y: 24, opacity: 0, duration: 0.6 }, "-=0.4");
-
-      // Pin the hero and drive the word reveal + parallax with a light scrub
-      const scrubTl = gsap.timeline({
-        scrollTrigger: {
-          trigger: pinRef.current,
-          start: "top top",
-          end: "+=80%",
-          scrub: 0.6,
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
-        },
-      });
-
-      scrubTl
-        .fromTo(
-          wordTargets,
-          { yPercent: 110 },
-          { yPercent: 0, ease: "power3.out", stagger: 0.25, duration: 1 },
-          0,
+      tl.from(imgRef.current, {
+        scale: 1.2,
+        opacity: 0,
+        duration: introDuration,
+        ease: "power2.out",
+      })
+        .from(
+          eyebrowRef.current,
+          { y: 16, opacity: 0, duration: smallDur },
+          `-=${Math.min(1, introDuration)}`,
         )
-        .fromTo(arteRef.current, { xPercent: -120 }, { xPercent: 0, ease: "none", duration: 1 }, 0)
-        .fromTo(manualRef.current, { xPercent: 120 }, { xPercent: 0, ease: "none", duration: 1 }, 0)
-        .to(imgRef.current, { yPercent: 12, ease: "none", duration: 1 }, 0);
+        .from(
+          subtitleRef.current,
+          { y: 28, opacity: 0, duration: prefersReduced ? 0 : 0.8 },
+          `-=${Math.min(0.6, introDuration)}`,
+        )
+        .from(
+          ctaRef.current,
+          { y: 24, opacity: 0, duration: prefersReduced ? 0 : 0.6 },
+          `-=${Math.min(0.4, introDuration)}`,
+        );
+
+      if (!prefersReduced) {
+        // Pin the hero and drive the word reveal + parallax with a light scrub
+        const scrubTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: pinRef.current,
+            start: "top top",
+            end: "+=80%",
+            scrub: 0.6,
+            pin: true,
+            pinSpacing: true,
+            anticipatePin: 1,
+          },
+        });
+
+        scrubTl
+          .fromTo(
+            wordTargets,
+            { yPercent: 110 },
+            { yPercent: 0, ease: "power3.out", stagger: 0.25, duration: 1 },
+            0,
+          )
+          .fromTo(
+            arteRef.current,
+            { xPercent: -120 },
+            { xPercent: 0, ease: "none", duration: 1 },
+            0,
+          )
+          .fromTo(
+            manualRef.current,
+            { xPercent: 120 },
+            { xPercent: 0, ease: "none", duration: 1 },
+            0,
+          )
+          .to(imgRef.current, { yPercent: 12, ease: "none", duration: 1 }, 0);
+      } else {
+        // If reduced motion is preferred, ensure final states are applied immediately
+        wordTargets.forEach((el) => (el.style.transform = "translateY(0)"));
+        if (arteRef.current) arteRef.current.style.transform = "translateX(0)";
+        if (manualRef.current) manualRef.current.style.transform = "translateX(0)";
+        if (imgRef.current) imgRef.current.style.transform = "translateY(0)";
+        if (eyebrowRef.current) eyebrowRef.current.style.opacity = "1";
+        if (subtitleRef.current) subtitleRef.current.style.opacity = "1";
+        if (ctaRef.current) ctaRef.current.style.opacity = "1";
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -56,7 +102,12 @@ export default function HeroSection() {
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    if (!el) return;
+    const prefersReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    el.scrollIntoView({ behavior: prefersReduced ? "auto" : "smooth" });
   };
 
   return (
