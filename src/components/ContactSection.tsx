@@ -36,7 +36,8 @@ export default function ContactSection() {
           Vamos criar algo <span className="italic text-primary">especial</span>?
         </h2>
         <p className="mx-auto mt-6 max-w-lg font-body text-base text-muted-foreground">
-          Fale diretamente conosco pelo WhatsApp! Tire suas dúvidas, faça encomendas personalizadas e receba atendimento exclusivo.
+          Fale diretamente conosco pelo WhatsApp! Tire suas dúvidas, faça encomendas personalizadas
+          e receba atendimento exclusivo.
         </p>
 
         {/* WhatsApp CTA */}
@@ -83,9 +84,7 @@ export default function ContactSection() {
               <h3 className="mt-4 font-display text-base font-semibold text-foreground">
                 {item.title}
               </h3>
-              <p className="mt-2 font-body text-sm text-muted-foreground">
-                {item.desc}
-              </p>
+              <p className="mt-2 font-body text-sm text-muted-foreground">{item.desc}</p>
             </div>
           ))}
         </div>

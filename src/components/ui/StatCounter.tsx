@@ -25,8 +25,7 @@ export default function StatCounter({ stat, delay = 1.4 }: StatCounterProps) {
       },
       onUpdate: () => {
         if (numRef.current) {
-          numRef.current.textContent =
-            Math.floor(obj.val).toString() + suffix;
+          numRef.current.textContent = Math.floor(obj.val).toString() + suffix;
         }
       },
     });
@@ -37,11 +36,7 @@ export default function StatCounter({ stat, delay = 1.4 }: StatCounterProps) {
 
   return (
     <div ref={wrapRef} role="listitem" aria-label={label}>
-      <p
-        ref={numRef}
-        className="font-display text-3xl font-bold text-primary"
-        aria-live="polite"
-      >
+      <p ref={numRef} className="font-display text-3xl font-bold text-primary" aria-live="polite">
         0{suffix}
       </p>
       <p className="mt-1 font-body text-xs text-muted-foreground">{label}</p>

@@ -13,9 +13,16 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Arte Manual — Crochê Artesanal Feito com Amor" },
-      { name: "description", content: "Peças únicas de crochê feitas à mão com carinho e dedicação. Mantas, amigurumis, bolsas e acessórios artesanais." },
+      {
+        name: "description",
+        content:
+          "Peças únicas de crochê feitas à mão com carinho e dedicação. Mantas, amigurumis, bolsas e acessórios artesanais.",
+      },
       { property: "og:title", content: "Arte Manual — Crochê Artesanal" },
-      { property: "og:description", content: "Peças únicas de crochê feitas à mão com carinho e dedicação." },
+      {
+        property: "og:description",
+        content: "Peças únicas de crochê feitas à mão com carinho e dedicação.",
+      },
     ],
   }),
 });

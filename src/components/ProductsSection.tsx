@@ -70,7 +70,8 @@ export default function ProductsSection() {
             Peças feitas com <span className="italic text-primary">carinho</span>
           </h2>
           <p className="mx-auto mt-6 max-w-lg font-body text-base text-muted-foreground">
-            Cada peça é única e feita sob encomenda, garantindo exclusividade e qualidade em cada detalhe.
+            Cada peça é única e feita sob encomenda, garantindo exclusividade e qualidade em cada
+            detalhe.
           </p>
         </div>
 
@@ -78,7 +79,9 @@ export default function ProductsSection() {
           {products.map((product, i) => (
             <div
               key={product.title}
-              ref={(el) => { cardsRef.current[i] = el; }}
+              ref={(el) => {
+                cardsRef.current[i] = el;
+              }}
               className="group cursor-pointer overflow-hidden rounded-2xl bg-card shadow-sm transition-all duration-500 hover:shadow-xl hover:-translate-y-2"
             >
               <div className="aspect-square overflow-hidden">
@@ -92,8 +95,12 @@ export default function ProductsSection() {
                 />
               </div>
               <div className="p-6">
-                <h3 className="font-display text-xl font-semibold text-foreground">{product.title}</h3>
-                <p className="mt-2 font-body text-sm leading-relaxed text-muted-foreground">{product.description}</p>
+                <h3 className="font-display text-xl font-semibold text-foreground">
+                  {product.title}
+                </h3>
+                <p className="mt-2 font-body text-sm leading-relaxed text-muted-foreground">
+                  {product.description}
+                </p>
                 <p className="mt-4 font-body text-sm font-semibold text-primary">{product.price}</p>
               </div>
             </div>

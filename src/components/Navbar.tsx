@@ -53,9 +53,7 @@ export default function Navbar() {
             height={40}
             className="h-10 w-10 drop-shadow-sm transition-opacity duration-300 ease-out"
           />
-          <span
-            className="font-display text-xl font-bold tracking-tight text-foreground transition-colors duration-300 ease-out"
-          >
+          <span className="font-display text-xl font-bold tracking-tight text-foreground transition-colors duration-300 ease-out">
             Arte <span className="text-primary">Manual</span>
           </span>
         </button>

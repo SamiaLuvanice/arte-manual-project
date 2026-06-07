@@ -44,26 +44,15 @@ export default function HeroSection() {
           wordTargets,
           { yPercent: 110 },
           { yPercent: 0, ease: "power3.out", stagger: 0.25, duration: 1 },
-          0
+          0,
         )
-        .fromTo(
-          arteRef.current,
-          { xPercent: -120 },
-          { xPercent: 0, ease: "none", duration: 1 },
-          0
-        )
-        .fromTo(
-          manualRef.current,
-          { xPercent: 120 },
-          { xPercent: 0, ease: "none", duration: 1 },
-          0
-        )
+        .fromTo(arteRef.current, { xPercent: -120 }, { xPercent: 0, ease: "none", duration: 1 }, 0)
+        .fromTo(manualRef.current, { xPercent: 120 }, { xPercent: 0, ease: "none", duration: 1 }, 0)
         .to(imgRef.current, { yPercent: 12, ease: "none", duration: 1 }, 0);
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
-
 
   const scrollTo = (id: string) => {
     const el = document.getElementById(id);
@@ -72,16 +61,28 @@ export default function HeroSection() {
 
   return (
     <section id="hero" ref={sectionRef} className="relative">
-      <div ref={pinRef} className="relative flex h-screen items-center justify-center overflow-hidden">
+      <div
+        ref={pinRef}
+        className="relative flex h-screen items-center justify-center overflow-hidden"
+      >
         {/* Background image with overlay */}
         <div ref={imgRef} className="absolute inset-0">
-          <img src={heroImg} alt="Produtos artesanais em crochê" width={1920} height={1080} className="h-full w-full object-cover" />
+          <img
+            src={heroImg}
+            alt="Produtos artesanais em crochê"
+            width={1920}
+            height={1080}
+            className="h-full w-full object-cover"
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-foreground/60 via-foreground/40 to-foreground/70" />
         </div>
 
         {/* Content */}
         <div className="relative z-10 mx-auto w-full max-w-6xl px-6 text-center">
-          <span ref={eyebrowRef} className="mb-6 inline-block font-body text-[0.7rem] font-medium uppercase tracking-[0.4em] text-primary-foreground/70 md:text-xs">
+          <span
+            ref={eyebrowRef}
+            className="mb-6 inline-block font-body text-[0.7rem] font-medium uppercase tracking-[0.4em] text-primary-foreground/70 md:text-xs"
+          >
             — Crochê artesanal · Desde 2019 —
           </span>
           <h1
@@ -107,13 +108,20 @@ export default function HeroSection() {
             ref={subtitleRef}
             className="mx-auto mt-6 max-w-xl font-body text-lg font-light leading-relaxed text-primary-foreground/80 md:text-xl"
           >
-            Peças únicas feitas à mão com carinho e dedicação. Cada ponto conta uma história de tradição e amor pelo artesanato.
+            Peças únicas feitas à mão com carinho e dedicação. Cada ponto conta uma história de
+            tradição e amor pelo artesanato.
           </p>
-          <div ref={ctaRef} className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center">
+          <div
+            ref={ctaRef}
+            className="mt-10 flex flex-col items-center gap-4 sm:flex-row sm:justify-center"
+          >
             <button onClick={() => scrollTo("products")} className="btn-primary">
               Ver Produtos
             </button>
-            <button onClick={() => scrollTo("about")} className="btn-outline border-accent-warm-foreground/80 text-accent-warm-foreground">
+            <button
+              onClick={() => scrollTo("about")}
+              className="btn-outline border-accent-warm-foreground/80 text-accent-warm-foreground"
+            >
               Nossa História
             </button>
           </div>
@@ -121,7 +129,17 @@ export default function HeroSection() {
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" className="text-accent-warm-foreground" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            className="text-accent-warm-foreground"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
             <path d="M12 5v14M19 12l-7 7-7-7" />
           </svg>
         </div>
