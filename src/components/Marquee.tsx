@@ -1,14 +1,25 @@
-import { useEffect, useRef } from "react";
 import gsap from "gsap";
+import { useEffect, useRef, type ReactElement } from "react";
 
-const WORDS = ["Crochê", "Artesanal", "Único", "Feito à mão"];
+const WORDS = ["Crochê", "Artesanal", "Único", "Feito à mão"] as const;
 
-export default function Marquee() {
-  const trackRef = useRef<HTMLDivElement>(null);
+export default function Marquee(): ReactElement {
+  const trackRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const track = trackRef.current;
     if (!track) return;
+
+    const prefersReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (prefersReduced) {
+      // Disable animation for users who prefer reduced motion
+      track.style.transform = "translateX(0)";
+      return;
+    }
 
     // A track contém 2 cópias idênticas lado a lado.
     // Animar -50% da largura total cria um loop perfeito.
@@ -19,18 +30,33 @@ export default function Marquee() {
       repeat: -1,
     });
 
-    // Quando as fontes terminam de carregar, a largura real muda.
-    // Reiniciamos o tween para re-medir e manter o loop alinhado.
     const restart = () => {
-      tween.invalidate().restart();
+      try {
+        tween.invalidate().restart();
+      } catch (e) {
+        // ignore
+      }
     };
 
-    if (typeof document !== "undefined" && "fonts" in document) {
-      document.fonts.ready.then(restart).catch(() => {});
+    // Reinicia quando fontes carregam (mudança de métricas) e quando o container redimensiona
+    let fontReadyHandler: Promise<void> | null = null;
+    if (typeof document !== "undefined") {
+      const doc = document as Document & { fonts?: FontFaceSet };
+      if (doc.fonts && doc.fonts.ready) {
+        fontReadyHandler = doc.fonts.ready.then(restart).catch(() => {});
+      }
     }
+
+    const ro = new ResizeObserver(() => {
+      restart();
+    });
+    ro.observe(track);
 
     return () => {
       tween.kill();
+      ro.disconnect();
+      // no reliable cancellation for fonts.ready promise
+      fontReadyHandler = null;
     };
   }, []);
 
