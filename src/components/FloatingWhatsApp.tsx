@@ -46,8 +46,6 @@ export default function FloatingWhatsApp(): ReactElement {
       return () => {
         if (showId) window.clearTimeout(showId);
         if (hideId) window.clearTimeout(hideId);
-        timeoutsRef.current.show = null;
-        timeoutsRef.current.hide = null;
         if (!prefersReduced) gsap.killTweensOf(node as Element);
       };
     }

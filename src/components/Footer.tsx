@@ -1,12 +1,15 @@
 import logoImg from "@/assets/logo-arte-manual.png";
 import { INSTAGRAM_URL, WHATSAPP_URL } from "@/lib/contact";
+import { type ReactElement } from "react";
 
-const footerLinks = [
+const FOOTER_LINKS = [
   { label: "Instagram", href: INSTAGRAM_URL },
   { label: "WhatsApp", href: WHATSAPP_URL },
-];
+] as const;
 
-export default function Footer() {
+export default function Footer(): ReactElement {
+  const year = new Date().getFullYear();
+
   return (
     <footer className="border-t border-border bg-background px-6 py-12">
       <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-6 md:flex-row">
@@ -24,21 +27,26 @@ export default function Footer() {
           </p>
         </div>
         <p className="font-body text-xs text-muted-foreground">
-          © {new Date().getFullYear()} Arte Manual. Todos os direitos reservados.
+          © {year} Arte Manual. Todos os direitos reservados.
         </p>
-        <div className="flex gap-5">
-          {footerLinks.map((link) => (
-            <a
-              key={link.label}
-              href={link.href}
-              target="_blank"
-              rel="noreferrer"
-              className="font-body text-xs font-medium text-muted-foreground transition-colors duration-300 hover:text-primary"
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
+
+        <nav aria-label="Footer navigation">
+          <ul role="list" className="flex gap-5">
+            {FOOTER_LINKS.map((link) => (
+              <li key={link.label}>
+                <a
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={`Open ${link.label} (opens in a new tab)`}
+                  className="font-body text-xs font-medium text-muted-foreground transition-colors duration-300 hover:text-primary"
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
       </div>
     </footer>
   );
