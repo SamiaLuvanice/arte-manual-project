@@ -1,11 +1,11 @@
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import useGsap from "@/hooks/useGsap";
-import blanketImg from "@/assets/product-blanket.jpeg";
 import amigurumiImg from "@/assets/product-amigurumi.jpeg";
 import bagImg from "@/assets/product-bag.jpeg";
+import blanketImg from "@/assets/product-blanket.jpeg";
+import useGsap from "@/hooks/useGsap";
+import gsap from "gsap";
+import { useEffect, useRef, type ReactElement } from "react";
 
-const products = [
+const PRODUCTS = [
   {
     title: "Acessórios",
     description: "Mantas artesanais perfeitas para aquecer seu lar com estilo e conforto.",
@@ -24,33 +24,48 @@ const products = [
     image: bagImg,
     price: "A partir de R$ 80",
   },
-];
+] as const;
 
-export default function ProductsSection() {
+export default function ProductsSection(): ReactElement {
   useGsap();
-  const sectionRef = useRef<HTMLElement>(null);
-  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const listRef = useRef<HTMLUListElement | null>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(".products-title", {
-        y: 40,
-        opacity: 0,
-        duration: 0.8,
-        scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
-      });
+    const prefersReduced =
+      typeof window !== "undefined" &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-      cardsRef.current.forEach((card, i) => {
-        if (!card) return;
-        gsap.from(card, {
+    const ctx = gsap.context(() => {
+      const titleNode = ".products-title";
+
+      if (!prefersReduced) {
+        gsap.from(titleNode, {
+          y: 40,
+          opacity: 0,
+          duration: 0.8,
+          scrollTrigger: { trigger: sectionRef.current, start: "top 80%" },
+        });
+
+        gsap.from(".product-card", {
           y: 60,
           opacity: 0,
           duration: 0.8,
-          delay: i * 0.2,
+          stagger: 0.2,
           ease: "power3.out",
-          scrollTrigger: { trigger: card, start: "top 85%" },
+          scrollTrigger: { trigger: sectionRef.current, start: "top 85%" },
         });
-      });
+      } else {
+        // Apply final states for reduced motion
+        const nodes = listRef.current?.querySelectorAll<HTMLElement>(".product-card") ?? [];
+        nodes.forEach((n) => {
+          n.style.opacity = "1";
+          n.style.transform = "none";
+        });
+        const titleEl = document.querySelector(titleNode) as HTMLElement | null;
+        if (titleEl) titleEl.style.opacity = "1";
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -75,37 +90,35 @@ export default function ProductsSection() {
           </p>
         </div>
 
-        <div className="mt-16 grid gap-8 md:grid-cols-3">
-          {products.map((product, i) => (
-            <div
-              key={product.title}
-              ref={(el) => {
-                cardsRef.current[i] = el;
-              }}
-              className="group cursor-pointer overflow-hidden rounded-2xl bg-card shadow-sm transition-all duration-500 hover:shadow-xl hover:-translate-y-2"
-            >
-              <div className="aspect-square overflow-hidden">
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  width={640}
-                  height={640}
-                  loading="lazy"
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="font-display text-xl font-semibold text-foreground">
-                  {product.title}
-                </h3>
-                <p className="mt-2 font-body text-sm leading-relaxed text-muted-foreground">
-                  {product.description}
-                </p>
-                <p className="mt-4 font-body text-sm font-semibold text-primary">{product.price}</p>
-              </div>
-            </div>
+        <ul ref={listRef} role="list" className="mt-16 grid gap-8 md:grid-cols-3">
+          {PRODUCTS.map((product) => (
+            <li key={product.title} className="product-card">
+              <article className="group cursor-pointer overflow-hidden rounded-2xl bg-card shadow-sm transition-all duration-500 hover:shadow-xl hover:-translate-y-2">
+                <div className="aspect-square overflow-hidden">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    width={640}
+                    height={640}
+                    loading="lazy"
+                    className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
+                <div className="p-6">
+                  <h3 className="font-display text-xl font-semibold text-foreground">
+                    {product.title}
+                  </h3>
+                  <p className="mt-2 font-body text-sm leading-relaxed text-muted-foreground">
+                    {product.description}
+                  </p>
+                  <p className="mt-4 font-body text-sm font-semibold text-primary">
+                    {product.price}
+                  </p>
+                </div>
+              </article>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
     </section>
   );
