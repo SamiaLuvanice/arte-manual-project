@@ -3,6 +3,7 @@ import { WHATSAPP_URL } from "@/lib/contact";
 import gsap from "gsap";
 import { Clock, Heart, MessageCircle } from "lucide-react";
 import { useEffect, useRef, type ReactElement } from "react";
+import SectionHeader from "./SectionHeader";
 
 const INFO_ITEMS = [
   {
@@ -49,22 +50,21 @@ export default function ContactSection(): ReactElement {
       aria-labelledby="contact-heading"
     >
       <div className="mx-auto max-w-4xl text-center contact-content">
-        <div className="flex items-baseline justify-center gap-4">
-          <span className="font-body text-xs font-semibold uppercase tracking-[0.3em] text-primary">
-            Contato
-          </span>
-        </div>
-
-        <h2
-          id="contact-heading"
-          className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight text-cream-foreground md:text-6xl lg:text-7xl"
-        >
-          Vamos criar algo <span className="italic text-primary">especial</span>?
-        </h2>
-        <p className="mx-auto mt-6 max-w-lg font-body text-base text-muted-foreground">
-          Fale diretamente conosco pelo WhatsApp! Tire suas dúvidas, faça encomendas personalizadas
-          e receba atendimento exclusivo.
-        </p>
+        <SectionHeader
+          eyebrow="Contato"
+          titleId="contact-heading"
+          title={
+            <>
+              Vamos criar algo <span className="italic text-primary">especial</span>?
+            </>
+          }
+          description={
+            <>
+              Fale diretamente conosco pelo WhatsApp! Tire suas dúvidas, faça encomendas
+              personalizadas e receba atendimento exclusivo.
+            </>
+          }
+        />
 
         {/* WhatsApp CTA */}
         <div className="mt-10">

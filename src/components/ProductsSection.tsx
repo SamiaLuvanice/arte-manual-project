@@ -4,6 +4,7 @@ import blanketImg from "@/assets/product-blanket.jpeg";
 import useGsap from "@/hooks/useGsap";
 import gsap from "gsap";
 import { useEffect, useRef, type ReactElement } from "react";
+import SectionHeader from "./SectionHeader";
 
 const PRODUCTS = [
   {
@@ -74,20 +75,18 @@ export default function ProductsSection(): ReactElement {
   return (
     <section id="products" ref={sectionRef} className="section-padding bg-background">
       <div className="mx-auto max-w-7xl">
-        <div className="products-title text-center">
-          <div className="flex items-baseline justify-center gap-4">
-            <span className="font-body text-xs font-semibold uppercase tracking-[0.3em] text-primary">
-              Nossos Produtos
-            </span>
-          </div>
-
-          <h2 className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight text-foreground md:text-6xl lg:text-7xl">
-            Peças feitas com <span className="italic text-primary">carinho</span>
-          </h2>
-          <p className="mx-auto mt-6 max-w-lg font-body text-base text-muted-foreground">
-            Cada peça é única e feita sob encomenda, garantindo exclusividade e qualidade em cada
-            detalhe.
-          </p>
+        <div className="products-title">
+          <SectionHeader
+            eyebrow="Nossos Produtos"
+            title={
+              <>
+                Peças feitas com <span className="italic text-primary">carinho</span>
+              </>
+            }
+            description={
+              <>Cada peça é única e feita sob encomenda, garantindo exclusividade e qualidade em cada detalhe.</>
+            }
+          />
         </div>
 
         <ul ref={listRef} role="list" className="mt-16 grid gap-8 md:grid-cols-3">

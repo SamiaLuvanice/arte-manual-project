@@ -3,6 +3,7 @@ import useGsap from "@/hooks/useGsap";
 import { STATS, StatItem } from "@/lib/constants";
 import gsap from "gsap";
 import { useEffect, useRef, type ReactElement } from "react";
+import SectionHeader from "./SectionHeader";
 import StatCounter from "./ui/StatCounter";
 
 export default function AboutSection(): ReactElement {
@@ -51,7 +52,7 @@ export default function AboutSection(): ReactElement {
       aria-labelledby="about-heading"
     >
       <div className="mx-auto grid max-w-7xl items-center gap-16 md:grid-cols-2">
-        <div className="about-img-wrap overflow-hidden rounded-3xl min-h-[480px] md:min-h-[560px]">
+        <div className="about-img-wrap overflow-hidden rounded-3xl min-h-120 md:min-h-140">
           <img
             src={aboutImg}
             alt="Novelos de lã coloridos"
@@ -62,30 +63,31 @@ export default function AboutSection(): ReactElement {
           />
         </div>
         <div className="about-text">
-          <div className="flex items-baseline gap-4">
-            <span className="font-body text-xs font-semibold uppercase tracking-[0.3em] text-primary">
-              Nossa História
-            </span>
-          </div>
-
-          <h2
-            id="about-heading"
-            className="mt-6 font-display text-5xl font-bold leading-[0.95] tracking-tight text-cream-foreground md:text-6xl lg:text-7xl"
-          >
-            Feito com as mãos,
-            <br />
-            <span className="italic text-primary">sentido no coração</span>
-          </h2>
-          <p className="mt-6 font-body text-base leading-relaxed text-muted-foreground">
-            A Arte Manual nasceu do amor pelo crochê e pela vontade de criar peças que aquecem não
-            só o corpo, mas também a alma. Cada produto é cuidadosamente confeccionado à mão, com
-            materiais de qualidade e atenção a cada detalhe.
-          </p>
-          <p className="mt-4 font-body text-base leading-relaxed text-muted-foreground">
-            Acreditamos que o artesanato é uma forma de expressão e conexão. Nossas peças carregam a
-            tradição do crochê com um toque moderno, perfeitas para presentear quem você ama ou
-            decorar seu lar com carinho.
-          </p>
+          <SectionHeader
+            eyebrow="Nossa História"
+            titleId="about-heading"
+            title={
+              <>
+                Feito com as mãos,
+                <br />
+                <span className="italic text-primary">sentido no coração</span>
+              </>
+            }
+            description={
+              <>
+                A Arte Manual nasceu do amor pelo crochê e pela vontade de criar peças que aquecem
+                não só o corpo, mas também a alma. Cada produto é cuidadosamente confeccionado à
+                mão, com materiais de qualidade e atenção a cada detalhe.
+                <br />
+                <br />
+                Acreditamos que o artesanato é uma forma de expressão e conexão. Nossas peças
+                carregam a tradição do crochê com um toque moderno, perfeitas para presentear quem
+                você ama ou decorar seu lar com carinho.
+              </>
+            }
+            align="left"
+            titleClassName="text-cream-foreground"
+          />
 
           <ul className="mt-8 grid grid-cols-3 gap-6" role="list">
             {STATS.map((stat: StatItem, i) => (
