@@ -1,7 +1,8 @@
 import heroImg from "@/assets/hero-crochet.jpg";
 import useGsap from "@/hooks/useGsap";
 import gsap from "gsap";
-import { useEffect, useRef, type ReactElement } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useLayoutEffect, useRef, type ReactElement } from "react";
 
 export default function HeroSection(): ReactElement {
   useGsap();
@@ -15,86 +16,142 @@ export default function HeroSection(): ReactElement {
   const ctaRef = useRef<HTMLDivElement | null>(null);
   const imgRef = useRef<HTMLDivElement | null>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const prefersReduced =
       typeof window !== "undefined" &&
       window.matchMedia &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+    gsap.registerPlugin(ScrollTrigger);
+
     const ctx = gsap.context(() => {
       const wordTargets = titleRef.current?.querySelectorAll<HTMLElement>("[data-word]") ?? [];
 
-      const introDuration = prefersReduced ? 0 : 1.6;
-      const smallDur = prefersReduced ? 0 : 0.7;
+      const introDuration = prefersReduced ? 0 : 1.4;
+      const introOffset = prefersReduced ? 0 : 24;
 
-      // Intro timeline (image + eyebrow + subtitle + CTA) on mount
-      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
-      tl.from(imgRef.current, {
-        scale: 1.2,
-        opacity: 0,
-        duration: introDuration,
-        ease: "power2.out",
-      })
+      const introTl = gsap.timeline({ defaults: { ease: "power4.out" } });
+      introTl
+        .from(imgRef.current, {
+          scale: 1.15,
+          opacity: 0,
+          duration: introDuration,
+          ease: "power2.out",
+        })
         .from(
           eyebrowRef.current,
-          { y: 16, opacity: 0, duration: smallDur },
-          `-=${Math.min(1, introDuration)}`,
+          { y: 16, opacity: 0, duration: introDuration * 0.45 },
+          `-=${Math.min(0.9, introDuration)}`,
         )
         .from(
           subtitleRef.current,
-          { y: 28, opacity: 0, duration: prefersReduced ? 0 : 0.8 },
-          `-=${Math.min(0.6, introDuration)}`,
+          { y: 28, opacity: 0, duration: introDuration * 0.5 },
+          `-=${Math.min(0.5, introDuration)}`,
         )
         .from(
           ctaRef.current,
-          { y: 24, opacity: 0, duration: prefersReduced ? 0 : 0.6 },
-          `-=${Math.min(0.4, introDuration)}`,
+          { y: 24, opacity: 0, duration: introDuration * 0.45 },
+          `-=${Math.min(0.35, introDuration)}`,
         );
 
-      if (!prefersReduced) {
-        // Pin the hero and drive the word reveal + parallax with a light scrub
-        const scrubTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: pinRef.current,
-            start: "top top",
-            end: "+=80%",
-            scrub: 0.6,
-            pin: true,
-            pinSpacing: true,
-            anticipatePin: 1,
-          },
-        });
+      gsap.set(titleRef.current, {
+        y: introOffset,
+        scale: prefersReduced ? 1.02 : 1.06,
+        filter: prefersReduced ? "none" : "blur(2px)",
+        opacity: 0,
+      });
+      gsap.set(wordTargets, {
+        yPercent: prefersReduced ? 40 : 110,
+        opacity: 0,
+      });
+      gsap.set([arteRef.current, manualRef.current], { xPercent: 0 });
 
-        scrubTl
-          .fromTo(
-            wordTargets,
-            { yPercent: 110 },
-            { yPercent: 0, ease: "power3.out", stagger: 0.25, duration: 1 },
-            0,
-          )
-          .fromTo(
-            arteRef.current,
-            { xPercent: -120 },
-            { xPercent: 0, ease: "none", duration: 1 },
-            0,
-          )
-          .fromTo(
-            manualRef.current,
-            { xPercent: 120 },
-            { xPercent: 0, ease: "none", duration: 1 },
-            0,
-          )
-          .to(imgRef.current, { yPercent: 12, ease: "none", duration: 1 }, 0);
-      } else {
-        // If reduced motion is preferred, ensure final states are applied immediately
-        wordTargets.forEach((el) => (el.style.transform = "translateY(0)"));
-        if (arteRef.current) arteRef.current.style.transform = "translateX(0)";
-        if (manualRef.current) manualRef.current.style.transform = "translateX(0)";
-        if (imgRef.current) imgRef.current.style.transform = "translateY(0)";
-        if (eyebrowRef.current) eyebrowRef.current.style.opacity = "1";
-        if (subtitleRef.current) subtitleRef.current.style.opacity = "1";
-        if (ctaRef.current) ctaRef.current.style.opacity = "1";
-      }
+      const titleStartY = prefersReduced ? 24 : 72;
+      const titleEndY = prefersReduced ? -8 : -28;
+      const titleStartScale = prefersReduced ? 1.02 : 1.08;
+      const titleEndScale = prefersReduced ? 1 : 0.98;
+      const wordStart = prefersReduced ? 40 : 110;
+      const imageStart = prefersReduced ? 4 : 12;
+      const sideStart = prefersReduced ? 48 : 120;
+      const clamp01 = gsap.utils.clamp(0, 1);
+
+      const trigger = ScrollTrigger.create({
+        trigger: pinRef.current,
+        start: "top top",
+        end: prefersReduced ? "+=95%" : "+=140%",
+        scrub: prefersReduced ? 0.5 : 0.8,
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
+        invalidateOnRefresh: true,
+        onUpdate: (self) => {
+          const progress = self.progress;
+          const eyebrowProgress = clamp01(progress / 0.34);
+          const arteProgress = clamp01((progress - 0.03) / 0.58);
+          const manualProgress = clamp01((progress - 0.11) / 0.66);
+          const subtitleProgress = clamp01((progress - 0.18) / 0.56);
+          const ctaProgress = clamp01((progress - 0.28) / 0.44);
+
+          if (eyebrowRef.current) {
+            gsap.set(eyebrowRef.current, {
+              y: (1 - eyebrowProgress) * 16,
+              opacity: eyebrowProgress,
+              letterSpacing: `${0.4 - eyebrowProgress * 0.12}em`,
+            });
+          }
+
+          if (titleRef.current) {
+            const y = titleStartY + (titleEndY - titleStartY) * progress;
+            const scale = titleStartScale + (titleEndScale - titleStartScale) * progress;
+            const blur = prefersReduced ? 0 : (1 - progress) * 2;
+            const titleOpacity = clamp01(progress / 0.06);
+            gsap.set(titleRef.current, {
+              y,
+              scale,
+              filter: `blur(${blur}px)`,
+              opacity: titleOpacity,
+            });
+          }
+
+          gsap.set(arteRef.current, {
+            xPercent: -sideStart * (1 - arteProgress),
+            rotate: (1 - arteProgress) * -3,
+            yPercent: (1 - arteProgress) * 10,
+            opacity: clamp01((progress - 0.02) / 0.16),
+          });
+          gsap.set(manualRef.current, {
+            xPercent: sideStart * (1 - manualProgress),
+            rotate: (1 - manualProgress) * 3,
+            yPercent: (1 - manualProgress) * 6,
+            opacity: clamp01((progress - 0.08) / 0.16),
+          });
+
+          if (subtitleRef.current) {
+            gsap.set(subtitleRef.current, {
+              y: (1 - subtitleProgress) * 22,
+              opacity: subtitleProgress,
+              filter: `blur(${(1 - subtitleProgress) * 1.2}px)`,
+            });
+          }
+
+          if (ctaRef.current) {
+            gsap.set(ctaRef.current, {
+              y: (1 - ctaProgress) * 18,
+              opacity: ctaProgress,
+              scale: 0.98 + ctaProgress * 0.02,
+            });
+          }
+          gsap.set(imgRef.current, {
+            yPercent: imageStart * progress,
+          });
+        },
+      });
+
+      ScrollTrigger.refresh();
+
+      return () => {
+        trigger.kill();
+      };
     }, sectionRef);
 
     return () => ctx.revert();
@@ -116,7 +173,6 @@ export default function HeroSection(): ReactElement {
         ref={pinRef}
         className="relative flex h-screen items-center justify-center overflow-hidden"
       >
-        {/* Background image with overlay */}
         <div ref={imgRef} className="absolute inset-0">
           <img
             src={heroImg}
@@ -128,7 +184,6 @@ export default function HeroSection(): ReactElement {
           <div className="absolute inset-0 bg-gradient-to-b from-foreground/60 via-foreground/40 to-foreground/70" />
         </div>
 
-        {/* Content */}
         <div className="relative z-10 mx-auto w-full max-w-6xl px-6 text-center">
           <span
             ref={eyebrowRef}
@@ -178,7 +233,6 @@ export default function HeroSection(): ReactElement {
           </div>
         </div>
 
-        {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
           <svg
             width="24"

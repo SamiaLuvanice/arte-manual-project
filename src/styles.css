@@ -142,6 +142,20 @@
 }
 
 @layer components {
+  @keyframes marquee-scroll {
+    from {
+      transform: translate3d(0, 0, 0);
+    }
+
+    to {
+      transform: translate3d(-50%, 0, 0);
+    }
+  }
+
+  .marquee-track {
+    animation: marquee-scroll 18s linear infinite;
+  }
+
   .btn-primary {
     @apply inline-flex items-center justify-center rounded-full bg-primary px-8 py-3 font-body text-sm font-medium tracking-wide text-primary-foreground uppercase transition-all duration-300;
   }
