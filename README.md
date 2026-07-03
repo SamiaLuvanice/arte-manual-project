@@ -33,7 +33,7 @@ npm run check
 
 Notas rápidas
 
-- O arquivo `vite.config.ts` usa o preset `@lovable.dev/vite-tanstack-config`. Evite adicionar plugins duplicados no `vite.config.ts`.
+- O arquivo `vite.config.ts` usa um preset base do projeto. Evite adicionar plugins duplicados no `vite.config.ts`.
 - O arquivo `src/routeTree.gen.ts` é gerado automaticamente pelo TanStack Router — jamais editar manualmente.
 - Imagens importantes (hero/products) podem se beneficiar de otimização (WebP/AVIF, srcset).
 

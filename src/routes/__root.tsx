@@ -35,7 +35,6 @@ export const Route = createRootRoute({
         name: "description",
         content: "Peças únicas de crochê feitas à mão com carinho e dedicação.",
       },
-      { name: "author", content: "Lovable" },
       { property: "og:title", content: "Arte Manual — Crochê Artesanal" },
       {
         property: "og:description",
@@ -43,21 +42,10 @@ export const Route = createRootRoute({
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
       { name: "twitter:title", content: "Arte Manual — Crochê Artesanal" },
       {
         name: "twitter:description",
         content: "Peças únicas de crochê feitas à mão com carinho e dedicação.",
-      },
-      {
-        property: "og:image",
-        content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0efacfb8-a655-4120-94c7-a79e5a6fc216/id-preview-de3f40a7--b5911c27-bff7-4555-9ced-361dcc8fba1d.lovable.app-1779911608899.png",
-      },
-      {
-        name: "twitter:image",
-        content:
-          "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/0efacfb8-a655-4120-94c7-a79e5a6fc216/id-preview-de3f40a7--b5911c27-bff7-4555-9ced-361dcc8fba1d.lovable.app-1779911608899.png",
       },
     ],
     links: [
@@ -76,7 +64,7 @@ export const Route = createRootRoute({
 
 function RootShell({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
