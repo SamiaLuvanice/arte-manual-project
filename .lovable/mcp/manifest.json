@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "sdk_version": "0.20.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "none"
+  },
+  "mcp": {
+    "server": {
+      "name": "arte-manual-mcp",
+      "version": "0.1.0",
+      "title": "Arte Manual MCP"
+    },
+    "tools": [
+      {
+        "name": "get_contact_info",
+        "title": "Get contact info",
+        "description": "Returns Arte Manual's public contact details (WhatsApp and Instagram).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_brand_stats",
+        "title": "Get brand stats",
+        "description": "Returns Arte Manual's headline stats (pieces created, happy clients, years of dedication).",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {}
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
