@@ -84,7 +84,10 @@ export default function ProductsSection(): ReactElement {
               </>
             }
             description={
-              <>Cada peça é única e feita sob encomenda, garantindo exclusividade e qualidade em cada detalhe.</>
+              <>
+                Cada peça é única e feita sob encomenda, garantindo exclusividade e qualidade em
+                cada detalhe.
+              </>
             }
           />
         </div>

@@ -17,7 +17,9 @@ const ToggleGroup = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof ToggleGroupPrimitive.Root> &
     VariantProps<typeof toggleVariants> & { type?: "single" | "multiple" }
 >(({ className, variant, size, type = "single", children, ...props }, ref) => {
-  const rootProps = props as any;
+  const rootProps = props as unknown as React.ComponentPropsWithoutRef<
+    typeof ToggleGroupPrimitive.Root
+  >;
 
   if (type === "multiple") {
     return (
@@ -25,7 +27,7 @@ const ToggleGroup = React.forwardRef<
         ref={ref}
         type="multiple"
         className={cn("flex items-center justify-center gap-1", className)}
-        {...rootProps}
+        {...(rootProps as Omit<ToggleGroupPrimitive.ToggleGroupMultipleProps, "type">)}
       >
         <ToggleGroupContext.Provider value={{ variant, size }}>
           {children}
@@ -39,7 +41,7 @@ const ToggleGroup = React.forwardRef<
       ref={ref}
       type="single"
       className={cn("flex items-center justify-center gap-1", className)}
-      {...rootProps}
+      {...(rootProps as Omit<ToggleGroupPrimitive.ToggleGroupSingleProps, "type">)}
     >
       <ToggleGroupContext.Provider value={{ variant, size }}>
         {children}
